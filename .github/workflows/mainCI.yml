@@ -24,6 +24,9 @@ concurrency:
 jobs:
   check-links:
     runs-on: ${{ fromJSON('["ubuntu-latest", "self-hosted"]')[github.repository == 'github/docs-internal'] }}
+    defaults:
+       run:
+         working-directory: ./server/
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -33,8 +36,8 @@ jobs:
         with:
           node-version: 16.13.x
           cache: npm
-          cache-dependency-path: '**/package-lock.json'
-
+          cache-dependency-path: './server/package-lock.json'
+          
       - name: Install
         run: npm ci
 
